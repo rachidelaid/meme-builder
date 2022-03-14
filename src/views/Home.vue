@@ -1,5 +1,6 @@
 <template>
   <section class="home">
+    <Search :filter="filter" />
     <div v-if="list" class="list">
       <Card
         v-for="img in list"
@@ -14,16 +15,23 @@
 <script>
 import { ref } from '@vue/reactivity';
 import Card from '../components/Card.vue';
-
-// import data from '../data.json';
+import Search from '../components/Search.vue';
 
 export default {
   name: 'Home',
   components: {
     Card,
+    Search,
   },
   setup() {
     const list = ref('');
+
+    const filter = (e) => {
+      const term = e.target.elements.term.value.trim();
+      list.value = list.value.filter((img) =>
+        img.name.toLowerCase().includes(term),
+      );
+    };
 
     fetch('https://api.imgflip.com/get_memes')
       .then((resp) => resp.json())
@@ -31,7 +39,7 @@ export default {
         list.value = data.memes;
       });
 
-    return { list };
+    return { list, filter };
   },
 };
 </script>

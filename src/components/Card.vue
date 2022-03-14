@@ -16,17 +16,19 @@ export default {
 .card {
   border-radius: var(--radius);
   cursor: pointer;
+  transition: 0.2s all ease-in-out;
 }
 
 .card img {
   width: 100%;
   aspect-ratio: 1;
   border-radius: var(--radius);
-  border: 1px var(--white) solid;
+  border: 5px var(--dark-olive) solid;
 }
 
 .card:hover {
   box-shadow: 0px 0px 15px 0px var(--lime);
+  transform: translateY(-10px);
 }
 
 .card:hover p {
