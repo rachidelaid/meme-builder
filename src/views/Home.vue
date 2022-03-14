@@ -1,10 +1,10 @@
 <template>
   <section class="home">
-    <div class="list">
+    <div v-if="list" class="list">
       <Card
         v-for="img in list"
         :key="img.id"
-        :link="img.blank"
+        :link="img.url"
         :name="img.name"
       />
     </div>
@@ -15,7 +15,7 @@
 import { ref } from '@vue/reactivity';
 import Card from '../components/Card.vue';
 
-import data from '../data.json';
+// import data from '../data.json';
 
 export default {
   name: 'Home',
@@ -23,7 +23,13 @@ export default {
     Card,
   },
   setup() {
-    const list = ref(data);
+    const list = ref('');
+
+    fetch('https://api.imgflip.com/get_memes')
+      .then((resp) => resp.json())
+      .then(({ data }) => {
+        list.value = data.memes;
+      });
 
     return { list };
   },
@@ -31,9 +37,13 @@ export default {
 </script>
 
 <style scoped>
+.home {
+  padding: 2rem;
+}
+
 .list {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
+  gap: 1.5rem;
 }
 </style>
