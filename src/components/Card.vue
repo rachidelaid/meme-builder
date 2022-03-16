@@ -1,14 +1,16 @@
 <template>
-  <div class="card">
-    <img :src="link" :alt="name" />
-    <p>{{ name }}</p>
-  </div>
+  <router-link :to="{ name: 'edit', params: { id, link, name } }">
+    <div class="card">
+      <img :src="link" :alt="name" />
+      <p>{{ name }}</p>
+    </div>
+  </router-link>
 </template>
 
 <script>
 export default {
   name: 'Card',
-  props: ['link', 'name'],
+  props: ['link', 'name', 'id'],
 };
 </script>
 
